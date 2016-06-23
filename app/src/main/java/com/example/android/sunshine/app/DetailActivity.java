@@ -17,6 +17,7 @@ package com.example.android.sunshine.app;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -43,8 +44,15 @@ public class DetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
+
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI, getIntent().getData());
+
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(args);
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new DetailFragment())
+                    .add(R.id.weather_detail_container, fragment)
                     .commit();
         }
     }
@@ -80,6 +88,7 @@ public class DetailActivity extends ActionBarActivity {
 
         private static final String LOG_TAG = DetailFragment.class.getSimpleName();
         private static final int DETAIL_LOADER = 0;
+        public static final String DETAIL_URI = "URI";
         private ShareActionProvider provider;
 
         private ImageView mIconView;
@@ -91,6 +100,7 @@ public class DetailActivity extends ActionBarActivity {
         private TextView mHumidityView;
         private TextView mWindView;
         private TextView mPressureView;
+        private Uri mUri;
 
 
         private String mForecast;
@@ -139,6 +149,11 @@ public class DetailActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
+            Bundle args = getArguments();
+            if (args != null) {
+                mUri = args.getParcelable(DETAIL_URI);
+            }
+
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
             mIconView = (ImageView) rootView.findViewById(R.id.image_icon);
@@ -162,6 +177,16 @@ public class DetailActivity extends ActionBarActivity {
             return shareIntent;
 
         }
+        public void onLocationChanged( String newLocation ) {
+            // replace the uri, since the location has changed
+            Uri uri = mUri;
+            if (null != uri) {
+                long date = WeatherContract.WeatherEntry.getDateFromUri(uri);
+                Uri updatedUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(newLocation, date);
+                mUri = updatedUri;
+                getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
+            }
+        }
 
         public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
             menuInflater.inflate(R.menu.fragmentdetail, menu);
@@ -180,9 +205,11 @@ public class DetailActivity extends ActionBarActivity {
         }
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            Intent intent = getActivity().getIntent();
+            if (mUri != null) {
+                return new CursorLoader(getActivity(), mUri, FORECAST_COLUMNS, null, null, null);
+            }
 
-            return new CursorLoader(getActivity(), intent.getData(), FORECAST_COLUMNS, null, null, null);
+            return null;
         }
 
         @Override

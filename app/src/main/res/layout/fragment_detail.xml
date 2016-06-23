@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding = "16dp"
+    android:paddingLeft = "16dp"
+    android:paddingTop = "16dp"
     android:orientation="vertical"
     tools:context=".DetailActivity.DetailFragment"
     >
@@ -12,12 +13,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/day_of_the_week"/>
+        android:id="@+id/day_of_the_week"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="24sp"
+        android:textColor="@color/black"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/date"/>
+        android:id="@+id/date"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="16sp"
+        android:textColor="@color/dark_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,12 +42,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/high_temp"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="96sp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/low_temp"/>
+                android:id="@+id/low_temp"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="48sp"
+                android:textColor="@color/dark_gray"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
@@ -59,7 +74,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/description"/>
+                android:id="@+id/description"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textColor="@color/dark_gray"/>
 
         </LinearLayout>
 
@@ -68,15 +86,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/humidity"/>
+        android:id="@+id/humidity"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/black"
+        android:textAppearance="?android:textAppearanceLarge"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/wind"/>
+        android:id="@+id/wind"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/black"
+        android:textAppearance="?android:textAppearanceLarge"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/pressure"/>
+        android:id="@+id/pressure"
+        android:fontFamily="sans-serif-light"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/black"/>
 
 
 </LinearLayout>
