@@ -1,8 +1,29 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary" tools:targetApi="lollipop">@color/sunshine_blue</item>
+        <item name="colorPrimaryDark" tools:targetApi="lollipop">@color/sunshine_dark_blue</item>
+    </style>
+
+    <style name="ForecastTheme" parent="AppTheme">
+        <item name="actionBarStyle" tools:targetApi="honeycomb">@style/ActionBar.Solid.Sunshine.NoTitle</item>
+    </style>
+
+    <style name="ActionBar.Solid.Sunshine.NoTitle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="displayOptions" tools:targetApi="honeycomb">useLogo|showHome</item>
+        <item name="logo">@drawable/ic_logo</item>
+    </style>
+
+    <style name="SettingsTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar" tools:targetApi="ice_cream_sandwich">
+        <item name="android:actionBarStyle">@style/ActionBar.V14.Sunshine.NoTitle</item>
+    </style>
+    
+    <style name="ActionBar.V14.Sunshine.NoTitle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse" tools:targetApi="ice_cream_sandwich">
+        <item name="android:background">@color/sunshine_blue</item>
+        <item name="android:height">56dp</item>
+        
     </style>
 
 </resources>

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 public class ForecastAdapter extends CursorAdapter {
     private final int VIEW_TODAY = 0;
     private final int VIEW_FUTURE = 1;
+    private boolean mUseCustomTodayLayout;
 
     public ForecastAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
@@ -26,7 +27,7 @@ public class ForecastAdapter extends CursorAdapter {
     }
 
     public int getItemViewType(int position) {
-        return (position == 0) ? VIEW_TODAY:VIEW_FUTURE;
+        return (position == 0 && mUseCustomTodayLayout) ? VIEW_TODAY:VIEW_FUTURE;
     }
 
     /*
@@ -37,7 +38,7 @@ public class ForecastAdapter extends CursorAdapter {
         int viewType = getItemViewType(cursor.getPosition());
         int layoutId = -1;
 
-        if (viewType == 0) {
+        if (viewType == 0 && mUseCustomTodayLayout) {
             layoutId = R.layout.list_item_forecast_today;
         } else {
             layoutId = R.layout.list_item_forecast;
@@ -85,5 +86,9 @@ public class ForecastAdapter extends CursorAdapter {
         double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
 
         viewHolder.lowView.setText(Utility.formatTemperature(context, low, isMetric));
+    }
+
+    public void setmUseCustomTodayLayout(boolean mUseCustomTodayLayout) {
+        this.mUseCustomTodayLayout = mUseCustomTodayLayout;
     }
 }
